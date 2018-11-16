@@ -150,7 +150,7 @@ An Actor as a Sink
 If the actor you are interacting with is essentially the termination point of the stream, it can be treated as a fully backpressured sink, using Sink.actorRefWithAck. As usual, the actor processes only one message at a time, but, in this case, the actor must respond with an acknowledgment message to support backpressure. In addition, the actor must also acknowledge an initialization message, to indicate that it is ready to handle messages. It may optionally handle a message when the stream is completed.
 
 Using this approach, it is possible to reimplement the first example that I provided, with a single Total actor exposed as a unique sink for every stream.
-
+```scala
 val total = system.actorOf(Props[Total], "total")
 
 val measurementsWebSocket = (sink: Sink[Increment, NotUsed]) =>  
@@ -176,8 +176,9 @@ val route =
       handleWebSocketMessages(measurementsWebSocket(sink))
     }
   }
+```
 The implementation of the actor is as follows.
-
+```scala
 object Total {  
   case object Init
   case object Ack
@@ -198,6 +199,7 @@ class Total extends Actor {
       println(s"WebSocket terminated for Id : $id")
   }
 }
+```
 ## Sending Message to a Stream
 Sending messages to an Akka Stream is a very useful pattern, but, at the time of this writing, it is also quite challenging, and it needs to be done with great care. There are two means for sending messages to an Akka Stream. The first is to use Source.actorRef. Messages sent to the actor materialized from this source will be emitted downstream, when there is demand. Otherwise, they will be buffered, up to the specified maximum, in conjunction with the overflow strategy.
 ```

@@ -252,7 +252,7 @@ object SimulateWindTurbines extends App {
     }
     .runWith(Sink.ignore)
 }
-scala
+```
 This example demonstrates the advantages of encapsulating a stream within an actor to handle the life-cycle management of the stream. The advantages of encapsulating a stream within an actor become even more apparent, however, for fault-tolerance and handling errors within the stream.
 
 ## Stream Supervision
@@ -313,6 +313,6 @@ object SimulateWindTurbines extends App {
 ```
 The actor supervision hierarchy has evolved to the following. Notice that in order to include backoff-and-retry for the WebSocket connection, I did not need to change the program radically. In fact, all that I needed to do was add one more layer or indirection, through actor supervision, I did not need to change anything else about the existing code or functionality.
 
-![wind-turbine-simulator-backoff-supervision](/images/wind-turbine-simulator-backoff-supervision)
+![wind-turbine-simulator-backoff-supervision](/images/wind-turbine-simulator-backoff-supervision.png)
 
 In this article, I demonstrated how Akka Actors compliment the Akka Stream API for fault tolerance and the life-cycle management of streams. In the next article in this series, I will extend this example to show how actors can be used to distribute streaming workloads within an Akka cluster and provide location transparency for streams.
