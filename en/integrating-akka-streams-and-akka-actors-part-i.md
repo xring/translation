@@ -202,7 +202,7 @@ class Total extends Actor {
 ```
 ## Sending Message to a Stream
 Sending messages to an Akka Stream is a very useful pattern, but, at the time of this writing, it is also quite challenging, and it needs to be done with great care. There are two means for sending messages to an Akka Stream. The first is to use Source.actorRef. Messages sent to the actor materialized from this source will be emitted downstream, when there is demand. Otherwise, they will be buffered, up to the specified maximum, in conjunction with the overflow strategy.
-```
+```scala
 val ref =  
   Source.actorRef[Long](Int.MaxValue, OverflowStrategy.fail)
     .to(Sink.foreach(println))
